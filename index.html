@@ -27,8 +27,33 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    //$("#contenido").append("<p>Parrafo</p>");
-});
+        function cargarTabla() {
+            $.ajax({
+                url: 'https://gb6ce396b5c87c5-db202109231843.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/library/library',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var resultado = "";
+                    response.items.forEach(function(item) {
+                        resultado+="<tr><td>"+item.id+"</td><td>";
+                        resultado+=item.target+"</td><td>";
+                        resultado+=item.capacity+"</td><td>";
+                        resultado+=item.category_id+"</td><td>";
+                        resultado+=item.name+"</td></tr>";
+                    });
+                    $(".cuerpoTabla").html(resultado);
+                },
+                error: function(xhr,status) {
+                    console.log(xhr.responseText);
+                },
+                complete: function(xhr,status){ 
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+        
+        $(document).ready(function(){
+            cargarTabla();
+        });
 </script>
 </html>
